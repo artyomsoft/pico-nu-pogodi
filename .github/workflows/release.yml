@@ -1,0 +1,57 @@
+name: Create release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release pushed tag
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Setup variables
+        run: |
+          VERSION=${{ github.ref_name }}
+          echo "VERSION=${VERSION#v}" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          sudo apt update && sudo apt install cmake python3 build-essential gcc-arm-none-eabi libnewlib-arm-none-eabi libstdc++-arm-none-eabi-newlib
+
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: "3.17.x"
+      - name: Use cmake
+        run: cmake --version
+
+      - name: Clone Pico SDK
+        run: |
+          git clone -b master https://github.com/raspberrypi/pico-sdk.git
+          cd pico-sdk
+          git submodule update --init --recursive
+
+      - name: Set PICO_SDK_PATH
+        run: echo "PICO_SDK_PATH=$(pwd)/pico-sdk" >> $GITHUB_ENV
+
+      - name: Build Emulator
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DPICO_COPY_TO_RAM=1
+          make
+      - name: Release with Notes
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            build/pico_nu_pogodi.uf2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

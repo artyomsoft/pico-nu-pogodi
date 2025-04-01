@@ -1,0 +1,34 @@
+.pio_version 0
+
+.program beeper_tx
+
+.wrap_target
+    out pins, 1 [7]
+.wrap
+
+% c-sdk {
+#include "hardware/clocks.h"
+
+static inline void beeper_tx_program_init(PIO pio, uint sm, uint offset, uint pin_tx, uint baud) {
+
+    pio_gpio_init(pio, pin_tx);
+
+    pio_sm_config c = beeper_tx_program_get_default_config(offset);
+
+    pio_sm_set_consecutive_pindirs(pio, sm, pin_tx, 1, true);
+
+    sm_config_set_out_shift(&c, true, true, 1);
+
+    sm_config_set_out_pins(&c, pin_tx, 1);
+
+    sm_config_set_fifo_join(&c, PIO_FIFO_JOIN_TX);
+
+    // SM transmits 1 bit per 8 execution cycles.
+    float div = (float)clock_get_hz(clk_sys) / (baud * 8);
+    sm_config_set_clkdiv(&c, div);
+
+    pio_sm_init(pio, sm, offset, &c);
+    pio_sm_set_enabled(pio, sm, true);
+}
+
+%}

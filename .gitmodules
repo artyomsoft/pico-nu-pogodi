@@ -1,0 +1,3 @@
+[submodule "lib/pico-display-drivs"]
+	path = lib/pico-display-drivs
+	url = https://github.com/artyomsoft/pico-displayDrivs
