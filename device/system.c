@@ -105,6 +105,7 @@ void mainloop() {
     if (emulate) {
       emulate = false;
       button = process_input();
+      printf("Button value = %d\n", button);
       system_run(SYS_FREQ / 128);
     }
   }
