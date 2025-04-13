@@ -31,6 +31,9 @@ u32 process_input() {
   } else if (gpio_get(13)) {
     result = 8;
   }
+  gpio_put(6, 0);
+  gpio_put(7, 0);
+
   BA = gpio_get(8);
   u8 a = !gpio_get(9);
   if (!a) {
