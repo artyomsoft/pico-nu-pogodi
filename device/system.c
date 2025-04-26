@@ -114,8 +114,8 @@ int init(int argc, char **argv) {
   bool romflg = false;
   int size = 0;
 
-  size = 179348;
-  romflg = romloader(o_data, size);
+  //  size = 179348;
+  romflg = romloader(o_data, sizeof(o_data));
 
   if (!romflg)
     return 1;

@@ -7,7 +7,7 @@
 
 uint16 *graphic_framebuffer = 0;
 uint16 *source_mixer = 0;
-uint8 SEG_TRANSPARENT_COLOR = 0;
+uint16 SEG_TRANSPARENT_COLOR = 0;
 
 uint16 rgb_multiply_8bits(uint32 bg, uint32 sg) {
   uint32 bg_r = (bg & GW_MASK_RGB565_R) >> 11;
@@ -17,40 +17,46 @@ uint16 rgb_multiply_8bits(uint32 bg, uint32 sg) {
   bg_r = (bg_r * sg) >> 8;
   bg_g = (bg_g * sg) >> 8;
   bg_b = (bg_b * sg) >> 8;
-  return (uint16)(bg_r << 11) | (bg_g << 5) | bg_b;
+  //  return (uint16)(bg_r << 11) | (bg_g << 5) | bg_b;
+  //  return (uint16)(sg << 11) | (sg << 5) | sg;
+
+  return sg;
 }
 
 void update_segment(uint8 segment_nb, bool segment_state) {
+  //  if (segment_nb != 0)
+  //    return;
   uint32 segment = _segments_offset[segment_nb];
-  uint8 cur_pixel;
+  printf("%d %d \n", segment_nb, segment);
+  //  uint8 cur_pixel;
+  //  uint16 cur_pixel;
   int idx = 0;
 
   if (segment_state == 0)
     return;
 
-  idx = segment & 0x1;
-  segment = segment >> 1;
-  uint8 *pixel;
-  pixel = &_segments[segment];
+  // idx = segment & 0x1;
+  idx = segment;
+  // segment = segment >> 1;
+  //    uint8 *pixel;
+  uint16 *pixel;
 
+  pixel = (void *)_segments + segment;
   uint16 segments_x = _segments_x[segment_nb];
   uint16 segments_y = _segments_y[segment_nb];
   uint16 segments_width = _segments_width[segment_nb];
   uint16 segments_height = _segments_height[segment_nb];
+  printf("pixel = %d x = %d y = %d w =%d h = %d\n", pixel, segments_x,
+         segments_y, segments_width, segments_height);
 
   for (int line = segments_y; line < segments_height + segments_y; line++) {
     for (int x = segments_x; x < segments_width + segments_x; x++) {
-      if ((idx & 0x1) == 0)
-        cur_pixel = pixel[idx >> 1] & 0xF0;
-      else
-        cur_pixel = pixel[idx >> 1] << 4;
-
-      cur_pixel |= cur_pixel >> 4;
-      idx++;
-
+      uint16 cur_pixel = *pixel++;
+      // idx++;
       if (cur_pixel != SEG_TRANSPARENT_COLOR)
-        graphic_framebuffer[line * GW_SCREEN_WIDTH + x] = rgb_multiply_8bits(
-            source_mixer[line * GW_SCREEN_WIDTH + x], cur_pixel);
+        graphic_framebuffer[line * GW_SCREEN_WIDTH + x] = cur_pixel;
+      //   graphic_framebuffer[line * GW_SCREEN_WIDTH + x] = rgb_multiply_8bits(
+      //       source_mixer[line * GW_SCREEN_WIDTH + x], cur_pixel);
     }
   }
 }
