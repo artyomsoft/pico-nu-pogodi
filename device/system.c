@@ -119,7 +119,6 @@ int init(int argc, char **argv) {
 
   if (!romflg)
     return 1;
-
   mainloop();
 
   return 0;
