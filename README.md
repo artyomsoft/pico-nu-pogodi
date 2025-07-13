@@ -1,28 +1,38 @@
 # Description
 
-This is a simple emulator of the Soviet game "Nu, Pogodi!" written for the Raspberry Pico. At the moment, it is implemented on a breadboard.
+This is a simple emulator of the Soviet game "Nu, Pogodi!" written for the Raspberry Pico.
+It is supposed to be implemented on perboard and optionally with 3D printed case.
+Old version which implemented for breadboad is in 1.0.x branch
 
-You can watch a video of how it works below.
+You can watch videos of how it works below.
 
-[![Nu, Pogodi! Emulator on Raspberry Pico](https://img.youtube.com/vi/PANg4w-u8EY/0.jpg)](https://www.youtube.com/watch?v=PANg4w-u8EY)
+[![Nu, Pogodi! emulator vs original](https://img.youtube.com/vi/qAGqy1fqH50/0.jpg)](https://www.youtube.com/watch?v=qAGqy1fqH50)
+
+**Nu, Pogodi! emulator vs original**
+
+[![Nu, Pogodi! emulator gameplay](https://img.youtube.com/vi/n9CVoQ6EzJo/0.jpg)](https://www.youtube.com/watch?v=n9CVoQ6EzJo)
+
+**Nu, Pogodi! emulator gameplay**
 
 # Used components
 
-1. Raspberry Pi Pico (I used the WiFi version, but the regular one or even a Chinese clone should work),
-2. Solderless breadboard,
-3. 8 momentary tactile buttons,
-4. 1 Button with position locking,
-5. TFT display (I used one with the ILI9341 driver),
-6. Passive piezo speaker,
-7. 100 Ohm resistor,
-8. 1 kOhm resistor,
-9. 2N222 transistor,
-10. Set of connecting wires with Dupont terminals,
-11. Set of jumpers for solderless breadboards.
+1. Raspberry Pi Pico (I used the WiFi version, but the regular one or even a Chinese clone should work).
+2. Perfboard 120x80.
+3. 8 momentary tactile buttons.
+4. 2 Button with position locking.
+5. MSP2806/MSP2807 display.
+6. Passive piezo speaker.
+7. 100 Ohm resistor.
+8. 1 kOhm resistor.
+9. 2N222 transistor.
+10. TP4056 based charging module (HW-373).
+11. Li-po 503450 battery.
+12. 3D prited case.
+13. 10 Screws 2x8.
 
-# Fritzing wiring diagram
+# Schematic
 
-![Fritzing wiring diagram](https://github.com/artyomsoft/pico-nu-pogodi/blob/1601ca157914c6db7b796f094fc5f9011df93252/resources/NuPogodi.png)
+![Schematic](https://github.com/artyomsoft/nu-pododi-pcb/blob/master/images/schematic-nu-pogodi.png)
 
 # How to build
 
@@ -57,3 +67,9 @@ You can watch a video of how it works below.
    make
    ```
 6. Connect the Raspberry Pi Pico in bootloader mode and copy the pico_nupogodi.uf2 file to it
+
+## Usefull links
+
+1. [PCB and schematic](https://github.com/artyomsoft/nu-pododi-pcb)
+2. [3D Models of the case](https://github.com/artyomsoft/nu-pogodi-case)
+3. [These 3D Models ready for printing on MakerWorld](https://makerworld.com/en/models/1602053-nu-pogodi-game-emulator)
