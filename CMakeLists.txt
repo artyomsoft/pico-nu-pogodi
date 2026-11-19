@@ -18,7 +18,7 @@ pico_sdk_init()
 
 
 add_executable(${PROJECT} ${sourcefiles})
-add_subdirectory(lib/pico-display-drivs/ili9341)
+add_subdirectory(lib/pico-display-drivs/st7789)
 add_subdirectory(lib/pico-display-drivs/gfx)
 #add_subdirectory(pico-extras)
 target_include_directories(${PROJECT} PRIVATE
@@ -26,7 +26,7 @@ target_include_directories(${PROJECT} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}/.. # for our common lwipopts or any other standard includes, if required
 )
 
-target_link_libraries(${PROJECT} pico_stdlib hardware_pio pico_multicore ili9341 gfx)
+target_link_libraries(${PROJECT} pico_stdlib hardware_pio pico_multicore st7789 gfx)
 target_include_directories(${PROJECT} PRIVATE "cpu" "gw" ".")
 pico_generate_pio_header(${PROJECT} ${CMAKE_CURRENT_LIST_DIR}/device/sound.pio)
 

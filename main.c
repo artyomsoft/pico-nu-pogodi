@@ -8,7 +8,7 @@
 #include "device/system.h"
 #include "gfx.h"
 #include "hardware/clocks.h"
-#include "ili9341.h"
+#include "st7789.h"
 #include "pico/multicore.h"
 #include "stdlib.h"
 #include <stdio.h>
@@ -31,7 +31,7 @@ int main() {
   stdio_init_all();
   //  play_sound_dma();
   LCD_setPins(TFT_DC, TFT_CS, TFT_RST, TFT_SCLK, TFT_MOSI);
-  LCD_initDisplay();
+  LCD_initDisplay(320, 240);
   LCD_setRotation(TFT_ROTATION);
   // //  getchar();
   init(1, NULL);

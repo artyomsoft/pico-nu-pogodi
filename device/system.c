@@ -1,7 +1,7 @@
 #include "system.h"
 #include "../cpu/core.h"
 #include "graphic.h"
-#include "ili9341.h"
+#include "st7789.h"
 #include "input.h"
 #include "pico/multicore.h"
 #include "pico/stdlib.h"
